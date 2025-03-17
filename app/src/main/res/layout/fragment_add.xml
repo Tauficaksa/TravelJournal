@@ -5,11 +5,74 @@
     android:layout_height="match_parent"
     tools:context=".AddFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:gravity="center"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="add" />
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Heading"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+        <EditText
+            android:layout_width="350dp"
+            android:layout_height="40dp"
+            android:hint="eg.Sankranti trip"
+            android:inputType="text"
+            android:layout_marginBottom="20dp"
+            android:paddingLeft="15dp"
+            android:background="@drawable/create_post_bg"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+        <EditText
+            android:layout_width="350dp"
+            android:layout_height="110dp"
+            android:hint="Enter description"
+            android:inputType="textMultiLine"
+            android:gravity="top"
+            android:layout_marginBottom="20dp"
+            android:paddingLeft="15dp"
+            android:background="@drawable/create_post_bg"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Location"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+        <EditText
+            android:layout_width="350dp"
+            android:layout_height="40dp"
+            android:hint="Hyderabad"
+            android:inputType="text"
+            android:layout_marginBottom="20dp"
+            android:paddingLeft="15dp"
+            android:background="@drawable/create_post_bg"/>
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/upload_img_logo_addfragment"
+            android:layout_height="100dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#98D8EF"
+            android:textColor="@color/black"
+            android:layout_marginBottom="30dp"
+            android:text="Add Image"/>
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:backgroundTint="@color/mainbg"
+            android:text="POST JOURNAL"/>
+
+    </LinearLayout>
 
 </FrameLayout>
