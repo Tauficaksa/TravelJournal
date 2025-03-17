@@ -55,17 +55,22 @@
             android:paddingLeft="15dp"
             android:background="@drawable/create_post_bg"/>
         <ImageView
+            android:id="@+id/imageView"
             android:layout_width="150dp"
+            android:layout_height="100dp"
             android:layout_marginBottom="10dp"
             android:src="@drawable/upload_img_logo_addfragment"
-            android:layout_height="100dp"/>
+            android:scaleType="centerCrop"/>
+
         <Button
+            android:id="@+id/addImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#98D8EF"
             android:textColor="@color/black"
             android:layout_marginBottom="30dp"
             android:text="Add Image"/>
+
         <Button
             android:layout_width="300dp"
             android:layout_height="wrap_content"
