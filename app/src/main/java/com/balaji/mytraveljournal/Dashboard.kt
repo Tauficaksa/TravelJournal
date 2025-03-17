@@ -21,6 +21,7 @@ class Dashboard : AppCompatActivity() {
                 R.id.home->loadFragment(HomeFragment())
                 R.id.add->loadFragment(AddFragment())
                 R.id.profile->loadFragment(ProfileFragment())
+                R.id.maps->loadFragment(MapsFragment())
             }
             true
         }
