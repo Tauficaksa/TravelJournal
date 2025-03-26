@@ -51,6 +51,7 @@ class MapsFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun checkAndRequestLocationPermission() {
+
         val fineLocation = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION)
         val coarseLocation = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION)
 
