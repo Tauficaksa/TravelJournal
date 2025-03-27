@@ -38,6 +38,7 @@
         android:orientation="vertical">
 
         <EditText
+            android:id="@+id/inputname"
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:hint="Full Name"
@@ -46,6 +47,7 @@
             android:padding="20dp"
             android:layout_marginBottom="20dp"/>
         <EditText
+            android:id="@+id/inputemail"
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:hint="Email Address"
@@ -54,6 +56,7 @@
             android:padding="20dp"
             android:layout_marginBottom="20dp"/>
         <EditText
+            android:id="@+id/inputpwd"
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:hint="Password"
@@ -62,6 +65,7 @@
             android:padding="20dp"
             android:layout_marginBottom="20dp"/>
         <EditText
+            android:id="@+id/inputrepwd"
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:hint="Retype password"
@@ -70,10 +74,12 @@
             android:padding="20dp"
             android:layout_marginBottom="20dp"/>
         <CheckBox
+            android:id="@+id/checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="I Agree to the terms and conditions"/>
         <Button
+            android:id="@+id/registerbtn"
             android:layout_width="300dp"
             android:layout_height="60dp"
             android:text="SIGN UP"

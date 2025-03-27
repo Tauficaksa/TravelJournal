@@ -4,7 +4,6 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -35,6 +34,19 @@ class JournalAdapter(private val journals:List<Journal>):RecyclerView.Adapter<Jo
         holder.tvtitle.text=journal.title
         holder.tvdescription.text=journal.description
         holder.ivjournalImage.setImageResource(journal.journalImage)
+        if(journal.isLiked){
+            holder.btnLike.setImageResource(R.drawable.like_button)
+        }
+        else{
+            holder.btnLike.setImageResource(R.drawable.like_before_click)
+        }
+
+        if(journal.isFollowed){
+            holder.btnfollow.text="FOLLOWING"
+        }
+        else{
+            holder.btnfollow.text="FOLLOW"
+        }
 
         holder.btnLike.setOnClickListener {
             if(!journal.isLiked){
