@@ -10,18 +10,28 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import com.balaji.mytraveljournal.api.Retrofit_Client
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import retrofit2.Call
 import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
+import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -40,6 +50,16 @@ class AddFragment : Fragment() {
 
         imageView = view.findViewById(R.id.imageView)
         addImageButton = view.findViewById(R.id.addImageButton)
+        val etname=view.findViewById<EditText>(R.id.inputjname)
+        val etdesc=view.findViewById<EditText>(R.id.inputjdesc)
+        val etlocation=view.findViewById<EditText>(R.id.inputjlocation)
+        val postbtn=view.findViewById<Button>(R.id.postjournalbtn)
+        postbtn.setOnClickListener {
+            val name=etname.text.toString()
+            val description=etdesc.text.toString()
+            val location=etlocation.text.toString()
+            uploadJournal(name,description,location)
+        }
 
         addImageButton.setOnClickListener {
             showImagePickerDialog()
@@ -49,6 +69,54 @@ class AddFragment : Fragment() {
 
         return view
     }
+
+    private fun uploadJournal(jname:String,jdesc:String,jlocation:String){
+        val userId = RequestBody.create("text/plain".toMediaTypeOrNull(), "0856be9a-7bf1-4def-89d9-606748db5124") // Change with actual user ID
+        val name = RequestBody.create("text/plain".toMediaTypeOrNull(), jname)
+        val description = RequestBody.create("text/plain".toMediaTypeOrNull(), jdesc)
+        val location = RequestBody.create("text/plain".toMediaTypeOrNull(), jlocation)
+
+        var imagePart: MultipartBody.Part? = null
+
+        imageUri?.let { uri ->
+            val file = copyUriToFile(requireContext(), uri) // Convert URI to File
+            val requestFile = RequestBody.create("image/*".toMediaTypeOrNull(), file)
+            imagePart = MultipartBody.Part.createFormData("image", file.name, requestFile)
+        }
+
+        val apiService = Retrofit_Client.instance
+        val call = apiService.uploadJournal(userId, name, description, location, imagePart)
+
+        call.enqueue(object : retrofit2.Callback<Unit> {
+            override fun onResponse(call: Call<Unit>, response: retrofit2.Response<Unit>) {
+                if (response.isSuccessful) {
+                    // Successfully uploaded
+                    Toast.makeText(requireContext(), "Journal posted successfully!", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(requireContext(), "Failed to upload journal", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            override fun onFailure(call: Call<Unit>, t: Throwable) {
+                Log.d("main activity","failuer in "+t.message)
+            }
+        })
+    }
+
+    private fun copyUriToFile(context: Context, uri: Uri): File {
+        val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
+        val file = File(context.cacheDir, "temp_image.jpg") // Save in cache directory
+        val outputStream = FileOutputStream(file)
+
+        inputStream?.use { input ->
+            outputStream.use { output ->
+                input.copyTo(output)
+            }
+        }
+
+        return file
+    }
+
 
     private fun showImagePickerDialog() {
         val options = arrayOf("Choose from Gallery", "Take a Photo")
