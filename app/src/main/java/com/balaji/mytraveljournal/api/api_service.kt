@@ -7,7 +7,9 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Part
+import retrofit2.http.Path
 
 interface api_service {
 
@@ -26,6 +28,15 @@ interface api_service {
 
     @POST("api/users/login")
     fun loginuser(@Body credentials:Map<String,String>):Call<User>
+
+    @Multipart
+    @PUT("api/users/{id}")
+    fun updateUser(
+        @Path("id") id:String,
+        @Part("name") name:RequestBody,
+        @Part("email") email:RequestBody,
+        @Part image:MultipartBody.Part?
+    ):Call<User>
 
 
 }

@@ -49,6 +49,7 @@ class AddFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_add, container, false)
 
+        imageUri=null
         imageView = view.findViewById(R.id.imageView)
         addImageButton = view.findViewById(R.id.addImageButton)
         val etname=view.findViewById<EditText>(R.id.inputjname)
@@ -60,7 +61,15 @@ class AddFragment : Fragment() {
             val name=etname.text.toString()
             val description=etdesc.text.toString()
             val location=etlocation.text.toString()
-            uploadJournal(name,description,location,userid)
+            if(name==""||description==""||location==""||imageUri==null){
+                Toast.makeText(requireContext(),"All Fields are mandatory",Toast.LENGTH_SHORT).show()
+            }
+            else uploadJournal(name,description,location,userid)
+            imageUri=null
+            imageView.setImageResource(R.drawable.upload_img_logo_addfragment)
+            etname.text.clear()
+            etdesc.text.clear()
+            etlocation.text.clear()
         }
 
         addImageButton.setOnClickListener {
