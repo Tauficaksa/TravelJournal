@@ -19,6 +19,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -54,11 +55,12 @@ class AddFragment : Fragment() {
         val etdesc=view.findViewById<EditText>(R.id.inputjdesc)
         val etlocation=view.findViewById<EditText>(R.id.inputjlocation)
         val postbtn=view.findViewById<Button>(R.id.postjournalbtn)
+        val userid=getUserId()
         postbtn.setOnClickListener {
             val name=etname.text.toString()
             val description=etdesc.text.toString()
             val location=etlocation.text.toString()
-            uploadJournal(name,description,location)
+            uploadJournal(name,description,location,userid)
         }
 
         addImageButton.setOnClickListener {
@@ -70,8 +72,17 @@ class AddFragment : Fragment() {
         return view
     }
 
-    private fun uploadJournal(jname:String,jdesc:String,jlocation:String){
-        val userId = RequestBody.create("text/plain".toMediaTypeOrNull(), "0856be9a-7bf1-4def-89d9-606748db5124") // Change with actual user ID
+    private fun getUserId():String?{
+        val sharedPreferences=requireActivity().getSharedPreferences("UserPrefs",AppCompatActivity.MODE_PRIVATE)
+        return sharedPreferences.getString("user_id",null)
+    }
+
+    private fun uploadJournal(jname:String,jdesc:String,jlocation:String,userid:String?){
+        if(userid==null){
+            Toast.makeText(requireContext(),"userid is null",Toast.LENGTH_SHORT).show()
+            return
+        }
+        val userId = RequestBody.create("text/plain".toMediaTypeOrNull(), userid) // Change with actual user ID
         val name = RequestBody.create("text/plain".toMediaTypeOrNull(), jname)
         val description = RequestBody.create("text/plain".toMediaTypeOrNull(), jdesc)
         val location = RequestBody.create("text/plain".toMediaTypeOrNull(), jlocation)

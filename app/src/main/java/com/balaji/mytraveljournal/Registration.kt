@@ -1,10 +1,12 @@
 package com.balaji.mytraveljournal
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -28,6 +30,11 @@ class Registration : AppCompatActivity() {
         val etconfirmpwd=findViewById<EditText>(R.id.inputrepwd)
         val cbischecked=findViewById<CheckBox>(R.id.checkbox)
         val signupbtn=findViewById<Button>(R.id.registerbtn)
+        val backsignin=findViewById<TextView>(R.id.backsignin)
+        backsignin.setOnClickListener {
+            val intent=Intent(this,MainActivity::class.java)
+            startActivity(intent)
+        }
 
         signupbtn.setOnClickListener {
             val name=etname.text.toString()

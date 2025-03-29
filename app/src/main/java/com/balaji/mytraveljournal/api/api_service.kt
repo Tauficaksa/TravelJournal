@@ -24,5 +24,8 @@ interface api_service {
         @Part image: MultipartBody.Part?
     ):Call<Unit>
 
+    @POST("api/users/login")
+    fun loginuser(@Body credentials:Map<String,String>):Call<User>
+
 
 }

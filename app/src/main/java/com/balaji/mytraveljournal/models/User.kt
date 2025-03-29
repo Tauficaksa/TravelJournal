@@ -5,6 +5,6 @@ data class User(
     val firebase_uid: String?=null,
     val id: String?=null,
     val name: String,
-    val profile_image: Any?=null,
+    val profile_image: String?=null,
     val pwd: String
 )
