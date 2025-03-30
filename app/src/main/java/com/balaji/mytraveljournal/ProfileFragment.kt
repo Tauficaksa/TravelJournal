@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +24,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.balaji.mytraveljournal.api.Retrofit_Client
 import com.balaji.mytraveljournal.models.User
+import com.squareup.picasso.Picasso
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -40,6 +42,8 @@ import java.util.Locale
 class ProfileFragment : Fragment() {
     private lateinit var imageView: ImageView
     private var imageUri: Uri? = null
+    private lateinit var tvusername:TextView
+    private lateinit var ivprofileimage:ImageView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,12 +51,28 @@ class ProfileFragment : Fragment() {
         // Inflate the layout for this fragment
         val view= inflater.inflate(R.layout.fragment_profile, container, false)
         val editbtn=view.findViewById<Button>(R.id.editprofilebtn)
+        tvusername=view.findViewById<TextView>(R.id.username)
+        ivprofileimage=view.findViewById<ImageView>(R.id.profileimage)
+        var username=getUsername()
+        var profileimage=getProfileimage()
+        tvusername.text=username
+        loadimage(profileimage)
         editbtn.setOnClickListener {
             imageUri=null
             showEditProfileDialog()
         }
         requestPermissions()
         return view
+    }
+
+    private fun loadimage(imageurl:String?){
+        if(imageurl==null){
+            ivprofileimage.setImageResource(R.drawable.icon_profile)
+        }
+        else{
+            val fullurl:String= "http://10.0.2.2:5000$imageurl"
+            Picasso.get().load(fullurl).into(ivprofileimage)
+        }
     }
 
     private fun showEditProfileDialog(){
@@ -99,6 +119,12 @@ class ProfileFragment : Fragment() {
             override fun onResponse(call: Call<User?>, response: Response<User?>) {
                 if(response.isSuccessful){
                     Toast.makeText(requireContext(),"Details Updated Successfully",Toast.LENGTH_SHORT).show()
+                    val user=response.body()
+                    if(user!=null){
+                        updateSession(user.name,user.profile_image)
+                        tvusername.text=user.name
+                        loadimage(user.profile_image)
+                    }
                     Log.d("main activity","sent successfully")
                 }
                 else{
@@ -110,6 +136,24 @@ class ProfileFragment : Fragment() {
                 Log.d("main activity","on failure"+t.message)
             }
         })
+    }
+
+    private fun updateSession(username:String,profileimage:String?){
+        val sharedPreferences = requireActivity().getSharedPreferences("UserPrefs", AppCompatActivity.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
+        editor.putString("user_name", username)
+        editor.putString("profile_image", profileimage)
+        editor.apply()
+    }
+
+    private fun getUsername():String?{
+        val sharedPreferences=requireActivity().getSharedPreferences("UserPrefs",AppCompatActivity.MODE_PRIVATE)
+        return sharedPreferences.getString("user_name",null)
+    }
+    private fun getProfileimage():String?{
+        val sharedPreferences=requireActivity().getSharedPreferences("UserPrefs",AppCompatActivity.MODE_PRIVATE)
+        return sharedPreferences.getString("profile_image",null)
     }
 
     private fun getUserId():String?{

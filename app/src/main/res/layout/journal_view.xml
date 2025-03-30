@@ -19,7 +19,9 @@
                 android:id="@+id/profileimage"
                 android:layout_width="80dp"
                 android:layout_height="60dp"
-                android:scaleType="fitXY"
+                android:scaleType="centerCrop"
+                android:clipToOutline="true"
+                android:background="@drawable/profile_image_background"
                 android:src="@drawable/icon_profile"/>
             <TextView
                 android:id="@+id/name"
@@ -27,7 +29,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_gravity="center_vertical"
-                android:textSize="18sp"
+                android:layout_marginLeft="20dp"
+                android:textSize="22sp"
                 android:textStyle="bold"
                 android:text="Balaji"/>
             <TextView
