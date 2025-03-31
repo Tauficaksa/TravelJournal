@@ -23,7 +23,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.balaji.mytraveljournal.api.Retrofit_Client
+import com.balaji.mytraveljournal.models.TravelJournals
+import com.balaji.mytraveljournal.models.TravelJournalsItem
 import com.balaji.mytraveljournal.models.User
+import com.balaji.mytraveljournal.models.Users
 import com.squareup.picasso.Picasso
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -44,6 +47,12 @@ class ProfileFragment : Fragment() {
     private var imageUri: Uri? = null
     private lateinit var tvusername:TextView
     private lateinit var ivprofileimage:ImageView
+    private lateinit var followinglist:ArrayList<User>
+    private lateinit var tvfollowingcount:TextView
+    private lateinit var journals:ArrayList<TravelJournalsItem>
+    private lateinit var tvfollowercount:TextView
+    private lateinit var tvjournalscount:TextView
+    private lateinit var followerlist:ArrayList<User>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,13 +62,23 @@ class ProfileFragment : Fragment() {
         val editbtn=view.findViewById<Button>(R.id.editprofilebtn)
         tvusername=view.findViewById<TextView>(R.id.username)
         ivprofileimage=view.findViewById<ImageView>(R.id.profileimage)
-        var username=getUsername()
-        var profileimage=getProfileimage()
+        tvfollowingcount=view.findViewById<TextView>(R.id.followingcount)
+        tvfollowercount=view.findViewById<TextView>(R.id.followercount)
+        tvjournalscount=view.findViewById(R.id.journalscount)
+        followinglist=ArrayList()
+        followerlist=ArrayList()
+        journals=ArrayList()
+        val userid=getUserId()
+        val username=getUsername()
+        val profileimage=getProfileimage()
         tvusername.text=username
+        getFollowingList(userid)
+        getFollowerList(userid)
+        getJournals(userid)
         loadimage(profileimage)
         editbtn.setOnClickListener {
             imageUri=null
-            showEditProfileDialog()
+            showEditProfileDialog(userid)
         }
         requestPermissions()
         return view
@@ -75,12 +94,71 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private fun showEditProfileDialog(){
+    private fun getFollowingList(userid:String?){
+        if(userid==null) return
+        val apiService=Retrofit_Client.instance
+        val call=apiService.getFollowingUsers(userid)
+        call.enqueue(object : Callback<Users?> {
+            override fun onResponse(call: Call<Users?>, response: Response<Users?>) {
+                if(response.isSuccessful){
+                    followinglist.clear()
+                    response.body()?.let { followinglist.addAll(it) }
+                    tvfollowingcount.text= (followinglist.size).toString()
+                }
+            }
+
+            override fun onFailure(call: Call<Users?>, t: Throwable) {
+                Log.d("main activity","failure in "+t.message)
+            }
+        })
+    }
+
+    private fun getFollowerList(userid: String?){
+        if(userid==null) return
+        val apiService=Retrofit_Client.instance
+        val call=apiService.getFollowerUsers(userid)
+        call.enqueue(object : Callback<Users?> {
+            override fun onResponse(call: Call<Users?>, response: Response<Users?>) {
+                if(response.isSuccessful){
+                    followerlist.clear()
+                    response.body()?.let { followerlist.addAll(it) }
+                    tvfollowercount.text=(followerlist.size).toString()
+                }
+            }
+
+            override fun onFailure(call: Call<Users?>, t: Throwable) {
+                Log.d("main activity","failure in "+t.message)
+            }
+        })
+    }
+
+    private fun getJournals(userid: String?){
+        if(userid==null) return
+        val apiService=Retrofit_Client.instance
+        val call=apiService.getJournalsOfUser(userid)
+        call.enqueue(object : Callback<TravelJournals?> {
+            override fun onResponse(
+                call: Call<TravelJournals?>,
+                response: Response<TravelJournals?>
+            ) {
+                if(response.isSuccessful){
+                    journals.clear()
+                    response.body()?.let { journals.addAll(it) }
+                    tvjournalscount.text=(journals.size).toString()
+                }
+            }
+
+            override fun onFailure(call: Call<TravelJournals?>, t: Throwable) {
+                Log.d("main activity","failure in "+t.message)
+            }
+        })
+    }
+
+    private fun showEditProfileDialog(userid:String?){
         val dialogview=LayoutInflater.from(requireContext()).inflate(R.layout.edit_profile_view,null)
         val editname=dialogview.findViewById<EditText>(R.id.editnewname)
         val editemail=dialogview.findViewById<EditText>(R.id.editnewemail)
         val selectpimage=dialogview.findViewById<Button>(R.id.addprofileimagebtn)
-        val userid=getUserId()
         imageView=dialogview.findViewById(R.id.profileimagepv)
         selectpimage.setOnClickListener {
             showImagePickerDialog()

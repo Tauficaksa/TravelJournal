@@ -47,8 +47,18 @@ interface api_service {
         @Path("id") id:String,
     ):Call<TravelJournals>
 
+    @GET("api/journals/journalsOfUser/{id}")
+    fun getJournalsOfUser(
+        @Path("id") id:String
+    ):Call<TravelJournals>
+
     @GET("api/follows/getFollowingUsers/{id}")
     fun getFollowingUsers(
+        @Path("id") id:String
+    ):Call<Users>
+
+    @GET("api/follows/getFollowerUsers/{id}")
+    fun getFollowerUsers(
         @Path("id") id:String
     ):Call<Users>
 
@@ -81,5 +91,6 @@ interface api_service {
     fun unfollowUser(
         @Body details:Map<String,String>
     ):Call<Unit>
+
 
 }

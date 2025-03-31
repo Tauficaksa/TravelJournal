@@ -47,8 +47,10 @@
                 android:gravity="center"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/followercount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="20sp"
                     android:text="111"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -64,8 +66,10 @@
                 android:gravity="center"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/followingcount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="20sp"
                     android:text="111"/>
                 <TextView
                     android:layout_width="wrap_content"
@@ -81,8 +85,10 @@
                 android:gravity="center"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/journalscount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="20sp"
                     android:text="20"/>
                 <TextView
                     android:layout_width="wrap_content"
