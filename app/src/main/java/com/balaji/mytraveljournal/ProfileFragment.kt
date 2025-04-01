@@ -22,6 +22,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.balaji.mytraveljournal.api.Retrofit_Client
 import com.balaji.mytraveljournal.models.TravelJournals
 import com.balaji.mytraveljournal.models.TravelJournalsItem
@@ -47,31 +49,42 @@ class ProfileFragment : Fragment() {
     private var imageUri: Uri? = null
     private lateinit var tvusername:TextView
     private lateinit var ivprofileimage:ImageView
+    private lateinit var recyclerview:RecyclerView
     private lateinit var followinglist:ArrayList<User>
+    private lateinit var likedusers:ArrayList<User>
     private lateinit var tvfollowingcount:TextView
     private lateinit var journals:ArrayList<TravelJournalsItem>
     private lateinit var tvfollowercount:TextView
     private lateinit var tvjournalscount:TextView
     private lateinit var followerlist:ArrayList<User>
+    private lateinit var profilejournals:ArrayList<ProfileJournal>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val view= inflater.inflate(R.layout.fragment_profile, container, false)
+
         val editbtn=view.findViewById<Button>(R.id.editprofilebtn)
         tvusername=view.findViewById<TextView>(R.id.username)
         ivprofileimage=view.findViewById<ImageView>(R.id.profileimage)
         tvfollowingcount=view.findViewById<TextView>(R.id.followingcount)
         tvfollowercount=view.findViewById<TextView>(R.id.followercount)
         tvjournalscount=view.findViewById(R.id.journalscount)
-        followinglist=ArrayList()
-        followerlist=ArrayList()
-        journals=ArrayList()
+        recyclerview=view.findViewById<RecyclerView>(R.id.profile_recyclerview)
+        recyclerview.layoutManager=LinearLayoutManager(requireContext())
+        recyclerview.adapter=ProfileJournalAdapter(emptyList())
         val userid=getUserId()
         val username=getUsername()
         val profileimage=getProfileimage()
+
+        followinglist=ArrayList()
+        followerlist=ArrayList()
+        journals=ArrayList()
+        likedusers=ArrayList()
+        profilejournals= ArrayList()
         tvusername.text=username
+
         getFollowingList(userid)
         getFollowerList(userid)
         getJournals(userid)
@@ -80,6 +93,7 @@ class ProfileFragment : Fragment() {
             imageUri=null
             showEditProfileDialog(userid)
         }
+
         requestPermissions()
         return view
     }
@@ -143,13 +157,55 @@ class ProfileFragment : Fragment() {
             ) {
                 if(response.isSuccessful){
                     journals.clear()
-                    response.body()?.let { journals.addAll(it) }
+                    response.body()?.let {
+                        journals.addAll(it)
+                        profilejournals.clear()
+                        var processed=0
+                        for(journal in it){
+                            getLikedUsers(journal.id){likes->
+                                profilejournals.add(ProfileJournal(journal.id,journal.name,journal.description,journal.image,likes))
+                                processed++
+                                if(processed==it.size){
+                                    updaterecyclerview()
+                                }
+                            }
+                        }
+                    }
                     tvjournalscount.text=(journals.size).toString()
                 }
             }
 
             override fun onFailure(call: Call<TravelJournals?>, t: Throwable) {
                 Log.d("main activity","failure in "+t.message)
+            }
+        })
+    }
+
+    private fun updaterecyclerview(){
+        recyclerview.adapter=ProfileJournalAdapter(profilejournals)
+        recyclerview.adapter?.notifyDataSetChanged()
+    }
+
+    private fun getLikedUsers(journalid: String?,onComplete: (Int) -> Unit){
+        if(journalid==null) return
+        val apiservice=Retrofit_Client.instance
+        val call=apiservice.getLikedUsers(journalid)
+        call.enqueue(object : Callback<Users?> {
+            override fun onResponse(call: Call<Users?>, response: Response<Users?>) {
+                if(response.isSuccessful){
+                    likedusers.clear()
+                    response.body()?.let { likedusers.addAll(it) }
+                    onComplete(likedusers.size)
+                }
+                else{
+                    onComplete(0)
+                }
+
+            }
+
+            override fun onFailure(call: Call<Users?>, t: Throwable) {
+                Log.d("main activity","failure in "+t.message)
+                onComplete(0)
             }
         })
     }

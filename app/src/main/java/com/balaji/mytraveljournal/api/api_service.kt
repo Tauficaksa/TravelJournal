@@ -67,6 +67,11 @@ interface api_service {
         @Path("id") id:String
     ):Call<TravelJournals>
 
+    @GET("api/likes/getLikedUsers/{id}")
+    fun getLikedUsers(
+        @Path("id") id:String
+    ):Call<Users>
+
     @GET("api/users/{id}")
     fun getUser(
         @Path("id") id:String
