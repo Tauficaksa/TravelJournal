@@ -71,20 +71,23 @@ class HomeFragment : Fragment() {
 
                         for (journal in alljournals) {
                             getUser(journal.user_id) { journaluser ->
-                                val name = journaluser?.name
-                                val profileimage = journaluser?.profile_image
-                                val isfollowed = allfollowing.any { it.id == journal.user_id }
-                                val isliked = likedjournals.any { it.id == journal.id }
-                                journals.add(
-                                    Journal(
-                                        journal.id, journal.user_id, profileimage, name,
-                                        journal.name,journal.location, journal.description, journal.image, isfollowed, isliked
+                                getLikeCount(journal.id){ likecount->
+                                    val name = journaluser?.name
+                                    val profileimage = journaluser?.profile_image
+                                    val isfollowed = allfollowing.any { it.id == journal.user_id }
+                                    val isliked = likedjournals.any { it.id == journal.id }
+                                    journals.add(
+                                        Journal(
+                                            journal.id, journal.user_id,likecount, profileimage, name,
+                                            journal.name,journal.location, journal.description, journal.image, isfollowed, isliked
+                                        )
                                     )
-                                )
 
-                                processedCount++
-                                if (processedCount == alljournals.size) {
-                                    callback(journals)
+                                    processedCount++
+                                    if (processedCount == alljournals.size) {
+                                        callback(journals)
+                                    }
+
                                 }
                             }
                         }
@@ -116,6 +119,25 @@ class HomeFragment : Fragment() {
             override fun onFailure(call: Call<User?>, t: Throwable) {
                 Log.d("HomeFragment", "Failure: ${t.message}")
                 callback(null)
+            }
+        })
+    }
+
+    private fun getLikeCount(journalid:String,callback: (Int) -> Unit){
+        val apiservice=Retrofit_Client.instance
+        val call=apiservice.getLikeCount(journalid)
+        call.enqueue(object : Callback<Int?> {
+            override fun onResponse(call: Call<Int?>, response: Response<Int?>) {
+                if(response.isSuccessful){
+                    callback(response.body()?:0)
+                }
+                else{
+                    callback(0)
+                }
+            }
+
+            override fun onFailure(call: Call<Int?>, t: Throwable) {
+                callback(0)
             }
         })
     }

@@ -27,6 +27,7 @@ class JournalAdapter(private val journals:MutableList<Journal>):RecyclerView.Ada
         val btnfollow:TextView=view.findViewById(R.id.followbtn)
         val btnLike:ImageView=view.findViewById(R.id.like_button)
         val btnmoreInfo:ImageView=view.findViewById(R.id.more_info_view)
+        val tvlikecount:TextView=view.findViewById(R.id.likecount)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -43,7 +44,8 @@ class JournalAdapter(private val journals:MutableList<Journal>):RecyclerView.Ada
         loadimage(journal.journalImage,holder.ivjournalImage)
         holder.tvname.text=journal.name
         holder.tvtitle.text=journal.title
-        holder.tvdescription.text=journal.description.substring(0,80)
+        holder.tvdescription.text=journal.description.substring(0,100)+"..."
+        holder.tvlikecount.text=(journal.likecount).toString()
         if(journal.isLiked){
             holder.btnLike.setImageResource(R.drawable.like_button)
         }
@@ -62,12 +64,16 @@ class JournalAdapter(private val journals:MutableList<Journal>):RecyclerView.Ada
             if(!journal.isLiked){
                 holder.btnLike.setImageResource(R.drawable.like_button)
                 likeJournal(userid,journal.id)
+                journal.likecount+=1
                 journal.isLiked=true
+                notifyDataSetChanged()
             }
             else{
                 holder.btnLike.setImageResource(R.drawable.like_before_click)
                 unlikeJournal(userid,journal.id)
+                journal.likecount-=1
                 journal.isLiked=false
+                notifyDataSetChanged()
             }
         }
         holder.btnfollow.setOnClickListener {

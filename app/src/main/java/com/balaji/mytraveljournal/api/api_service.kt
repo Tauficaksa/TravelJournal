@@ -62,6 +62,11 @@ interface api_service {
         @Path("id") id:String
     ):Call<Users>
 
+    @DELETE("api/journals/{id}")
+    fun deleteJournal(
+        @Path("id") id:String
+    ):Call<Unit>
+
     @GET("api/likes/getLikedJournals/{id}")
     fun getLikedJournals(
         @Path("id") id:String
@@ -71,6 +76,11 @@ interface api_service {
     fun getLikedUsers(
         @Path("id") id:String
     ):Call<Users>
+
+    @GET("api/likes/likecount/{id}")
+    fun getLikeCount(
+        @Path("id") id:String
+    ):Call<Int>
 
     @GET("api/users/{id}")
     fun getUser(

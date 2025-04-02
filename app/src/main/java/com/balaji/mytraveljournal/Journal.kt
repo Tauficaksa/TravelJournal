@@ -3,6 +3,7 @@ package com.balaji.mytraveljournal
 data class Journal(
     val id:String,
     val userid:String,
+    var likecount:Int,
     val profileImage: String?,
     val name: String?,
     val title: String,

@@ -18,7 +18,7 @@
             <ImageView
                 android:id="@+id/profileimage"
                 android:layout_width="80dp"
-                android:layout_height="60dp"
+                android:layout_height="70dp"
                 android:scaleType="centerCrop"
                 android:clipToOutline="true"
                 android:background="@drawable/profile_image_background"
@@ -35,28 +35,28 @@
                 android:text="Balaji"/>
             <TextView
                 android:id="@+id/followbtn"
-                android:layout_width="100dp"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:textColor="@color/white"
                 android:padding="10dp"
-                android:textSize="12sp"
+                android:textSize="16sp"
                 android:gravity="center"
                 android:background="@color/mainbg"
-                android:text="FOLLOW" />
+                android:text="FOLLOWING" />
         </LinearLayout>
         <TextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:text="Hyderabad"/>
         <TextView
             android:id="@+id/description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="18sp"
             android:textStyle="italic"
             android:text="Hyderabad, the capital of Telangana, is a vibrant city in southern India known for its rich history, culture, and technology sector. Founded in 1591 by Muhammad Quli Qutb Shah, it is..."
             />
@@ -77,6 +77,16 @@
                 android:layout_height="40dp"
                 android:src="@drawable/like_before_click"
                 android:scaleType="centerCrop"/>
+            <TextView
+                android:id="@+id/likecount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="22"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="5dp"
+                android:textSize="20sp"
+                android:textStyle="italic"/>
+
             <View
                 android:layout_width="0dp"
                 android:layout_height="1dp"

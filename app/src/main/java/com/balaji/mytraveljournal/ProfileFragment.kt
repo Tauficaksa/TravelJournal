@@ -74,7 +74,7 @@ class ProfileFragment : Fragment() {
         tvjournalscount=view.findViewById(R.id.journalscount)
         recyclerview=view.findViewById<RecyclerView>(R.id.profile_recyclerview)
         recyclerview.layoutManager=LinearLayoutManager(requireContext())
-        recyclerview.adapter=ProfileJournalAdapter(emptyList())
+        recyclerview.adapter=ProfileJournalAdapter(mutableListOf())
 
         val logoutbtn=view.findViewById<Button>(R.id.logoutbtn)
         logoutbtn.setOnClickListener {
@@ -189,7 +189,7 @@ class ProfileFragment : Fragment() {
     }
 
     private fun updaterecyclerview(){
-        recyclerview.adapter=ProfileJournalAdapter(profilejournals)
+        recyclerview.adapter=ProfileJournalAdapter(profilejournals.toMutableList())
         recyclerview.adapter?.notifyDataSetChanged()
     }
 
