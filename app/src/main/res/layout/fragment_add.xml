@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Heading"
+            android:text="Title"
             android:textSize="20sp"
             android:textStyle="bold"/>
         <EditText
@@ -40,7 +40,7 @@
             android:inputType="textMultiLine"
             android:gravity="top"
             android:layout_marginBottom="20dp"
-            android:paddingLeft="15dp"
+            android:padding="15dp"
             android:background="@drawable/create_post_bg"/>
         <TextView
             android:layout_width="wrap_content"

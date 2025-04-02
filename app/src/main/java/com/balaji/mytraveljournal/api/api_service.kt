@@ -52,6 +52,12 @@ interface api_service {
         @Path("id") id:String
     ):Call<TravelJournals>
 
+    @PUT("api/journals/{id}")
+    fun updateJournal(
+        @Path("id") id:String,
+        @Body details:Map<String,String>
+    ):Call<Unit>
+
     @GET("api/follows/getFollowingUsers/{id}")
     fun getFollowingUsers(
         @Path("id") id:String

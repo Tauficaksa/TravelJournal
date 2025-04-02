@@ -9,51 +9,48 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enter New Name"
+        android:text="Enter New Title"
         android:layout_marginBottom="15dp"
         android:textSize="22sp"
         android:textStyle="bold"/>
     <EditText
-        android:id="@+id/editnewname"
+        android:id="@+id/editjtitle"
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="20dp"
         android:paddingLeft="15dp"
+        android:layout_marginBottom="20dp"
         android:inputType="text"
         android:background="@drawable/create_post_bg"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Enter New Email"
+        android:text="Enter New Location"
         android:layout_marginBottom="15dp"
         android:textSize="22sp"
         android:textStyle="bold"/>
     <EditText
-        android:id="@+id/editnewemail"
+        android:id="@+id/editjlocation"
         android:layout_width="300dp"
         android:layout_height="40dp"
-        android:inputType="text"
         android:paddingLeft="15dp"
+        android:inputType="text"
         android:layout_marginBottom="20dp"
         android:background="@drawable/create_post_bg"/>
-    <ImageView
-        android:id="@+id/profileimagepv"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
-        android:layout_marginBottom="10dp"
-        android:src="@drawable/upload_img_logo_addfragment"
-        android:scaleType="centerCrop"/>
-
-    <Button
-        android:id="@+id/addprofileimagebtn"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#98D8EF"
-        android:textColor="@color/black"
-        android:layout_marginBottom="30dp"
-        android:text="Add Profile Photo"/>
-
-
-
-
+        android:text="Enter New Description"
+        android:layout_marginBottom="15dp"
+        android:textSize="22sp"
+        android:textStyle="bold"/>
+    <EditText
+        android:id="@+id/editjdesc"
+        android:layout_width="350dp"
+        android:layout_height="250dp"
+        android:hint="Enter description (atleast 200 words)"
+        android:inputType="textMultiLine"
+        android:gravity="top"
+        android:layout_marginBottom="20dp"
+        android:padding="15dp"
+        android:background="@drawable/create_post_bg"/>
 </LinearLayout>

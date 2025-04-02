@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
                 if(response.isSuccessful){
                     val user=response.body()
                     if (user != null) {
-                        createSession(user.id,user.name,user.profile_image)
+                        createSession(user.id,user.name,user.profile_image,user.email)
                     }
                     Toast.makeText(this@MainActivity,"Login Successful",Toast.LENGTH_SHORT).show()
                     val intent=Intent(this@MainActivity,Dashboard::class.java)
@@ -65,10 +65,11 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
-    private fun createSession(userid:String?,name:String?,profile_image:String?){
+    private fun createSession(userid:String?,name:String?,profile_image:String?,email: String){
         val sharedPreferences = getSharedPreferences("UserPrefs", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
 
+        editor.putString("email",email)
         editor.putString("user_id", userid)
         editor.putString("user_name", name)
         editor.putString("profile_image", profile_image)

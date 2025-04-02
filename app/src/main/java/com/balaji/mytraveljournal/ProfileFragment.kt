@@ -84,6 +84,7 @@ class ProfileFragment : Fragment() {
         val userid=getUserId()
         val username=getUsername()
         val profileimage=getProfileimage()
+        val email=getEmail()
 
         followinglist=ArrayList()
         followerlist=ArrayList()
@@ -98,9 +99,8 @@ class ProfileFragment : Fragment() {
         loadimage(profileimage)
         editbtn.setOnClickListener {
             imageUri=null
-            showEditProfileDialog(userid)
+            showEditProfileDialog(userid,username,email)
         }
-
         requestPermissions()
         return view
     }
@@ -170,7 +170,7 @@ class ProfileFragment : Fragment() {
                         var processed=0
                         for(journal in it){
                             getLikedUsers(journal.id){likes->
-                                profilejournals.add(ProfileJournal(journal.id,journal.name,journal.description,journal.image,likes))
+                                profilejournals.add(ProfileJournal(journal.id,journal.name,journal.location,journal.description,journal.image,likes))
                                 processed++
                                 if(processed==it.size){
                                     updaterecyclerview()
@@ -240,11 +240,13 @@ class ProfileFragment : Fragment() {
         editor.apply()
     }
 
-    private fun showEditProfileDialog(userid:String?){
+    private fun showEditProfileDialog(userid:String?,name:String?,email:String?){
         val dialogview=LayoutInflater.from(requireContext()).inflate(R.layout.edit_profile_view,null)
         val editname=dialogview.findViewById<EditText>(R.id.editnewname)
         val editemail=dialogview.findViewById<EditText>(R.id.editnewemail)
         val selectpimage=dialogview.findViewById<Button>(R.id.addprofileimagebtn)
+        editname.setText(name)
+        editemail.setText(email)
         imageView=dialogview.findViewById(R.id.profileimagepv)
         selectpimage.setOnClickListener {
             showImagePickerDialog()
@@ -323,6 +325,11 @@ class ProfileFragment : Fragment() {
     private fun getUserId():String?{
         val sharedPreferences=requireActivity().getSharedPreferences("UserPrefs", AppCompatActivity.MODE_PRIVATE)
         return sharedPreferences.getString("user_id",null)
+    }
+
+    private fun getEmail():String?{
+        val sharedPreferences=requireActivity().getSharedPreferences("UserPrefs", AppCompatActivity.MODE_PRIVATE)
+        return sharedPreferences.getString("email",null)
     }
 
     private fun copyUriToFile(context: Context, uri: Uri): File {
