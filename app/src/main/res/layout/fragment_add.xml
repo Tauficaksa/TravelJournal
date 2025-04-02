@@ -36,7 +36,7 @@
             android:id="@+id/inputjdesc"
             android:layout_width="350dp"
             android:layout_height="110dp"
-            android:hint="Enter description"
+            android:hint="Enter description (atleast 200 words)"
             android:inputType="textMultiLine"
             android:gravity="top"
             android:layout_marginBottom="20dp"

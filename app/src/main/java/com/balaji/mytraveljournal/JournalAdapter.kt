@@ -43,7 +43,7 @@ class JournalAdapter(private val journals:MutableList<Journal>):RecyclerView.Ada
         loadimage(journal.journalImage,holder.ivjournalImage)
         holder.tvname.text=journal.name
         holder.tvtitle.text=journal.title
-        holder.tvdescription.text=journal.description
+        holder.tvdescription.text=journal.description.substring(0,80)
         if(journal.isLiked){
             holder.btnLike.setImageResource(R.drawable.like_button)
         }
@@ -92,6 +92,11 @@ class JournalAdapter(private val journals:MutableList<Journal>):RecyclerView.Ada
         }
         holder.btnmoreInfo.setOnClickListener {
             val intent = Intent(holder.itemView.context, CompleteJournalView::class.java)
+            intent.putExtra("title",journal.title)
+            intent.putExtra("name",journal.name)
+            intent.putExtra("location",journal.location)
+            intent.putExtra("journalimage",journal.journalImage)
+            intent.putExtra("desc",journal.description)
             holder.itemView.context.startActivity(intent)
         }
     }

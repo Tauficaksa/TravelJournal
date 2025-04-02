@@ -22,7 +22,7 @@
         <ImageView
             android:id="@+id/pjimage"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="250dp"
             android:scaleType="fitXY"
             android:layout_marginVertical="10dp"
             android:src="@drawable/hyd_img"/>

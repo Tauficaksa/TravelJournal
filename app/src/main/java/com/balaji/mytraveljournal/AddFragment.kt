@@ -64,6 +64,9 @@ class AddFragment : Fragment() {
             if(name==""||description==""||location==""||imageUri==null){
                 Toast.makeText(requireContext(),"All Fields are mandatory",Toast.LENGTH_SHORT).show()
             }
+            else if(description.length<200){
+                Toast.makeText(requireContext(),"description should be atleast 200 words",Toast.LENGTH_SHORT).show()
+            }
             else uploadJournal(name,description,location,userid)
             imageUri=null
             imageView.setImageResource(R.drawable.upload_img_logo_addfragment)

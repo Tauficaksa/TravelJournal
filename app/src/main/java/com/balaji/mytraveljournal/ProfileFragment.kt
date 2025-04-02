@@ -3,6 +3,7 @@ package com.balaji.mytraveljournal
 import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
@@ -74,6 +75,12 @@ class ProfileFragment : Fragment() {
         recyclerview=view.findViewById<RecyclerView>(R.id.profile_recyclerview)
         recyclerview.layoutManager=LinearLayoutManager(requireContext())
         recyclerview.adapter=ProfileJournalAdapter(emptyList())
+
+        val logoutbtn=view.findViewById<Button>(R.id.logoutbtn)
+        logoutbtn.setOnClickListener {
+            showlogoutdialog()
+        }
+
         val userid=getUserId()
         val username=getUsername()
         val profileimage=getProfileimage()
@@ -208,6 +215,29 @@ class ProfileFragment : Fragment() {
                 onComplete(0)
             }
         })
+    }
+
+    private fun showlogoutdialog(){
+        val dialog=AlertDialog.Builder(requireContext())
+            .setTitle("LOGOUT")
+            .setMessage("Are you sure you want to logout?")
+            .setPositiveButton("Yes"){_,_->
+                endSession()
+                val intent=Intent(requireActivity(),MainActivity::class.java)
+                startActivity(intent)
+            }
+            .setNegativeButton("No"){_,_->
+
+            }
+            .create()
+        dialog.show()
+    }
+
+    private fun endSession(){
+        val sharedPreferences=requireActivity().getSharedPreferences("UserPrefs",AppCompatActivity.MODE_PRIVATE)
+        val editor=sharedPreferences.edit()
+        editor.clear()
+        editor.apply()
     }
 
     private fun showEditProfileDialog(userid:String?){

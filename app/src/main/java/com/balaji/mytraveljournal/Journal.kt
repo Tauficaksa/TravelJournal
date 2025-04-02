@@ -6,6 +6,7 @@ data class Journal(
     val profileImage: String?,
     val name: String?,
     val title: String,
+    val location:String,
     val description: String,
     val journalImage: String,
     var isFollowed: Boolean,

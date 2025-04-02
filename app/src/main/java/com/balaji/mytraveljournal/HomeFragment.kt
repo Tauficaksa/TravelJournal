@@ -75,11 +75,10 @@ class HomeFragment : Fragment() {
                                 val profileimage = journaluser?.profile_image
                                 val isfollowed = allfollowing.any { it.id == journal.user_id }
                                 val isliked = likedjournals.any { it.id == journal.id }
-
                                 journals.add(
                                     Journal(
                                         journal.id, journal.user_id, profileimage, name,
-                                        journal.name, journal.description, journal.image, isfollowed, isliked
+                                        journal.name,journal.location, journal.description, journal.image, isfollowed, isliked
                                     )
                                 )
 

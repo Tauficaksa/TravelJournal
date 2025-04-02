@@ -5,22 +5,26 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp"
     android:orientation="vertical"
+    android:layout_margin="10dp"
+    android:padding="20dp"
     android:gravity="center"
     tools:context=".CompleteJournalView">
 
     <TextView
+        android:id="@+id/ctitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
+        android:textSize="30sp"
+        android:layout_marginTop="15dp"
         android:layout_marginBottom="10dp"
         android:textStyle="bold"
         android:text="My Sankranti Trip"/>
     <TextView
+        android:id="@+id/cauthor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:layout_marginBottom="20dp"
         android:text="Balaji"/>
     <LinearLayout
@@ -29,13 +33,16 @@
         android:orientation="vertical"
         android:gravity="left">
         <TextView
+            android:id="@+id/clocation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:text="Hyderabad"
-            android:textSize="20sp"
+            android:textSize="22sp"
             android:textStyle="bold"/>
     </LinearLayout>
     <ImageView
+        android:id="@+id/cimage"
         android:layout_width="400dp"
         android:layout_height="300dp"
         android:scaleType="fitXY"
@@ -50,23 +57,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/cdesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Hyderabad, the capital of Telangana, is a city known for its rich history, vibrant culture, and booming technology industry. Founded in 1591 by Muhammad Quli Qutb Shah, it was once the seat of the Nizams, making it one of the wealthiest princely states. The city is famous for landmarks like Charminar, Golconda Fort, and Chowmahalla Palace, showcasing its architectural grandeur. Hyderabad is also a major IT hub, housing global tech giants in HITEC City. The cuisine, especially Hyderabadi Biryani and Haleem, is world-renowned. With a mix of tradition and modernity, Hyderabad celebrates festivals like Ramzan and Bonalu with great enthusiasm. The city's pearl and diamond trade have earned it the title City of Pearls. Its blend of history, technology, and culture makes Hyderabad a truly unique destination."
-                android:textSize="15sp"
+                android:textSize="20sp"
                 android:layout_marginBottom="10dp"
-                android:textStyle="italic"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Must Visit Place"
-                android:textStyle="bold"
-                android:textSize="18sp"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Charminar\nRamoji Film City"
-                android:textSize="15sp"
                 android:textStyle="italic"/>
         </LinearLayout>
     </ScrollView>
