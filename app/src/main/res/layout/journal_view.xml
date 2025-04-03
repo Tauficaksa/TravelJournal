@@ -33,17 +33,6 @@
                 android:textSize="22sp"
                 android:textStyle="bold"
                 android:text="Balaji"/>
-            <TextView
-                android:id="@+id/followbtn"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textColor="@color/white"
-                android:padding="10dp"
-                android:textSize="16sp"
-                android:gravity="center"
-                android:background="@color/mainbg"
-                android:text="FOLLOWING" />
         </LinearLayout>
         <TextView
             android:id="@+id/title"

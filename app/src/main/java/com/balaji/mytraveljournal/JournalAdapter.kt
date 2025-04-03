@@ -24,7 +24,6 @@ class JournalAdapter(private val journals:MutableList<Journal>):RecyclerView.Ada
         val tvtitle:TextView=view.findViewById(R.id.title)
         val tvdescription:TextView=view.findViewById(R.id.description)
         val ivjournalImage:ImageView=view.findViewById(R.id.journal_image)
-        val btnfollow:TextView=view.findViewById(R.id.followbtn)
         val btnLike:ImageView=view.findViewById(R.id.like_button)
         val btnmoreInfo:ImageView=view.findViewById(R.id.more_info_view)
         val tvlikecount:TextView=view.findViewById(R.id.likecount)
@@ -53,11 +52,11 @@ class JournalAdapter(private val journals:MutableList<Journal>):RecyclerView.Ada
             holder.btnLike.setImageResource(R.drawable.like_before_click)
         }
 
-        if(journal.isFollowed){
-            holder.btnfollow.text="FOLLOWING"
-        }
-        else{
-            holder.btnfollow.text="FOLLOW"
+
+        holder.tvname.setOnClickListener {
+            val intent=Intent(holder.itemView.context,OthersProfile::class.java)
+            intent.putExtra("user_id",journal.userid)
+            holder.itemView.context.startActivity(intent)
         }
 
         holder.btnLike.setOnClickListener {
@@ -76,26 +75,7 @@ class JournalAdapter(private val journals:MutableList<Journal>):RecyclerView.Ada
                 notifyDataSetChanged()
             }
         }
-        holder.btnfollow.setOnClickListener {
-            if(!journal.isFollowed){
-                followUser(userid,journal.userid)
-                for(indjournal in journals){
-                    if(indjournal.userid==journal.userid){
-                        indjournal.isFollowed=true
-                    }
-                }
-                notifyDataSetChanged()
-            }
-            else{
-                unfollowUser(userid,journal.userid)
-                for(indjournal in journals){
-                    if(indjournal.userid==journal.userid){
-                        indjournal.isFollowed=false
-                    }
-                }
-                notifyDataSetChanged()
-            }
-        }
+
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, CompleteJournalView::class.java)
             intent.putExtra("title",journal.title)
@@ -150,43 +130,6 @@ class JournalAdapter(private val journals:MutableList<Journal>):RecyclerView.Ada
         )
         val apiService=Retrofit_Client.instance
         val call=apiService.unlikeJournal(details)
-        call.enqueue(object : Callback<Unit?> {
-            override fun onResponse(call: Call<Unit?>, response: Response<Unit?>) {
-
-            }
-
-            override fun onFailure(call: Call<Unit?>, t: Throwable) {
-                Log.d("main activity","failure in "+t.message)
-            }
-        })
-    }
-
-    private fun followUser(userid:String?,followingid:String){
-        if(userid==null) return
-        val details= mapOf(
-            "follower_id" to userid,
-            "following_id" to followingid
-        )
-        val apiService=Retrofit_Client.instance
-        val call=apiService.followUser(details)
-        call.enqueue(object : Callback<Unit?> {
-            override fun onResponse(call: Call<Unit?>, response: Response<Unit?>) {
-
-            }
-
-            override fun onFailure(call: Call<Unit?>, t: Throwable) {
-                Log.d("main activity","failure in "+t.message)
-            }
-        })
-    }
-    private fun unfollowUser(userid:String?,followingid:String){
-        if(userid==null) return
-        val details= mapOf(
-            "follower_id" to userid,
-            "following_id" to followingid
-        )
-        val apiService=Retrofit_Client.instance
-        val call=apiService.unfollowUser(details)
         call.enqueue(object : Callback<Unit?> {
             override fun onResponse(call: Call<Unit?>, response: Response<Unit?>) {
 

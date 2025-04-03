@@ -2,6 +2,7 @@ package com.balaji.mytraveljournal
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.balaji.mytraveljournal.api.Retrofit_Client
 import com.squareup.picasso.Picasso
@@ -45,6 +47,21 @@ class ProfileJournalAdapter(private val profilejournals:MutableList<ProfileJourn
         holder.ivedit.setOnClickListener {
             editalertdialog(profilejournal.id,holder.itemView.context,profilejournal)
         }
+        val username=getUserName(holder.itemView.context)
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, CompleteJournalView::class.java)
+            intent.putExtra("title",profilejournal.title)
+            intent.putExtra("name",username)
+            intent.putExtra("location",profilejournal.location)
+            intent.putExtra("journalimage",profilejournal.journal_image)
+            intent.putExtra("desc",profilejournal.description)
+            holder.itemView.context.startActivity(intent)
+        }
+    }
+
+    private fun getUserName(context: Context): String? {
+        val sharedPreferences = context.getSharedPreferences("UserPrefs", AppCompatActivity.MODE_PRIVATE)
+        return sharedPreferences.getString("user_name", null)
     }
 
     private fun editalertdialog(journalid:String,context: Context,profilejournal: ProfileJournal){
