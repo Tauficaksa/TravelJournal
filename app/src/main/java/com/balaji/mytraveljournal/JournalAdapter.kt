@@ -96,6 +96,15 @@ class JournalAdapter(private val journals:MutableList<Journal>):RecyclerView.Ada
                 notifyDataSetChanged()
             }
         }
+        holder.itemView.setOnClickListener {
+            val intent = Intent(holder.itemView.context, CompleteJournalView::class.java)
+            intent.putExtra("title",journal.title)
+            intent.putExtra("name",journal.name)
+            intent.putExtra("location",journal.location)
+            intent.putExtra("journalimage",journal.journalImage)
+            intent.putExtra("desc",journal.description)
+            holder.itemView.context.startActivity(intent)
+        }
         holder.btnmoreInfo.setOnClickListener {
             val intent = Intent(holder.itemView.context, CompleteJournalView::class.java)
             intent.putExtra("title",journal.title)

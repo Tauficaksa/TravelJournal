@@ -22,7 +22,7 @@ class Dashboard : AppCompatActivity() {
                 R.id.add->loadFragment(AddFragment())
                 R.id.profile->loadFragment(ProfileFragment())
                 R.id.maps->loadFragment(MapsFragment())
-
+                R.id.favourites->loadFragment(FavouritesFragment())
             }
             true
         }

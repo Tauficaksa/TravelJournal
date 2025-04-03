@@ -15,6 +15,10 @@
         android:title="Maps"
         android:icon="@drawable/maps_icon"/>
     <item
+        android:id="@+id/favourites"
+        android:title="Favourites"
+        android:icon="@drawable/favourites_icon"/>
+    <item
         android:id="@+id/profile"
         android:title="Profile"
         android:icon="@drawable/icon_profile"
