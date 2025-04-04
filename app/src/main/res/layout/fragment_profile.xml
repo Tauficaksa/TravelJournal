@@ -107,6 +107,7 @@
                 android:id="@+id/editprofilebtn"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:textSize="16sp"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/mainbg"
                 android:text="Edit Profile"/>
@@ -118,6 +119,7 @@
                 android:id="@+id/logoutbtn"
                 android:layout_width="0dp"
                 android:layout_weight="1"
+                android:textSize="16sp"
                 android:backgroundTint="@color/mainbg"
                 android:layout_height="wrap_content"
                 android:text="Logout"/>

@@ -52,7 +52,11 @@ class JournalAdapter(private val journals:MutableList<Journal>):RecyclerView.Ada
             holder.btnLike.setImageResource(R.drawable.like_before_click)
         }
 
-
+        holder.ivprofileImage.setOnClickListener {
+            val intent=Intent(holder.itemView.context,OthersProfile::class.java)
+            intent.putExtra("user_id",journal.userid)
+            holder.itemView.context.startActivity(intent)
+        }
         holder.tvname.setOnClickListener {
             val intent=Intent(holder.itemView.context,OthersProfile::class.java)
             intent.putExtra("user_id",journal.userid)

@@ -51,6 +51,11 @@ class SearchJournalAdapter(private val journals:MutableList<SearchJournal>):Recy
             intent.putExtra("user_id",journal.user_id)
             holder.itemView.context.startActivity(intent)
         }
+        holder.ivprofileimage.setOnClickListener {
+            val intent=Intent(holder.itemView.context,OthersProfile::class.java)
+            intent.putExtra("user_id",journal.user_id)
+            holder.itemView.context.startActivity(intent)
+        }
     }
 
     private fun getUser(userid: String?,imageview:ImageView,tvusername:TextView) {
