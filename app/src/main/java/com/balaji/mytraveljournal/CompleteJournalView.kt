@@ -1,5 +1,6 @@
 package com.balaji.mytraveljournal
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
@@ -20,6 +21,8 @@ class CompleteJournalView : AppCompatActivity() {
         val location=intent.getStringExtra("location")
         val image=intent.getStringExtra("journalimage")
         val desc=intent.getStringExtra("desc")
+        val userid=intent.getStringExtra("user_id")
+        val loggesinuserid=getUserId()
         val tvtitle=findViewById<TextView>(R.id.ctitle)
         val tvauthor=findViewById<TextView>(R.id.cauthor)
         val tvlocation=findViewById<TextView>(R.id.clocation)
@@ -30,7 +33,20 @@ class CompleteJournalView : AppCompatActivity() {
         tvlocation.text=location
         tvdesc.text=desc
         loadimage(image)
+        tvauthor.setOnClickListener {
+            if(loggesinuserid!=userid){
+                val intent=Intent(this,OthersProfile::class.java)
+                intent.putExtra("user_id",userid)
+                startActivity(intent)
+            }
+        }
     }
+
+    private fun getUserId(): String? {
+        val sharedPreferences = getSharedPreferences("UserPrefs",MODE_PRIVATE)
+        return sharedPreferences.getString("user_id", null)
+    }
+
     private fun loadimage(imageurl:String?){
         if(imageurl==null){
             imageview?.setImageResource(R.drawable.icon_profile)

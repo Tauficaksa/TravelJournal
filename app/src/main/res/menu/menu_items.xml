@@ -11,9 +11,9 @@
         android:icon="@drawable/icon_add"
         />
     <item
-        android:id="@+id/maps"
-        android:title="Maps"
-        android:icon="@drawable/maps_icon"/>
+        android:id="@+id/search"
+        android:title="Search"
+        android:icon="@drawable/search_icon"/>
     <item
         android:id="@+id/favourites"
         android:title="Favourites"

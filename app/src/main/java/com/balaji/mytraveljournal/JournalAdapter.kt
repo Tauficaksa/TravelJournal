@@ -83,6 +83,7 @@ class JournalAdapter(private val journals:MutableList<Journal>):RecyclerView.Ada
             intent.putExtra("location",journal.location)
             intent.putExtra("journalimage",journal.journalImage)
             intent.putExtra("desc",journal.description)
+            intent.putExtra("user_id",journal.userid)
             holder.itemView.context.startActivity(intent)
         }
         holder.btnmoreInfo.setOnClickListener {

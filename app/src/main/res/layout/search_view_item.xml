@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="30dp"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/searchprofileimage"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:scaleType="centerCrop"
+            android:clipToOutline="true"
+            android:background="@drawable/profile_image_background"
+            android:src="@drawable/icon_profile"/>
+        <TextView
+            android:id="@+id/searchname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="Balaji"/>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/location_icon"
+            android:layout_gravity="center_vertical"/>
+        <TextView
+            android:id="@+id/searchlocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hyderabad"
+            android:layout_gravity="center_vertical"
+            android:textStyle="italic"
+            android:textSize="18sp"/>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

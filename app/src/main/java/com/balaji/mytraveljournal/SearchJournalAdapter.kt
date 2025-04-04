@@ -17,29 +17,43 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class OthersPjAdapter(private val journals:MutableList<TravelJournalsItem>):RecyclerView.Adapter<OthersPjAdapter.ViewHolder>() {
+class SearchJournalAdapter(private val journals:MutableList<SearchJournal>):RecyclerView.Adapter<SearchJournalAdapter.ViewHolder>() {
     class ViewHolder(view: View):RecyclerView.ViewHolder(view){
-        val tvtitle=view.findViewById<TextView>(R.id.ojtitle)
-        val ivimage=view.findViewById<ImageView>(R.id.ojimage)
+        val ivprofileimage=view.findViewById<ImageView>(R.id.searchprofileimage)
+        val tvname=view.findViewById<TextView>(R.id.searchname)
+        val tvlocation=view.findViewById<TextView>(R.id.searchlocation)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view=LayoutInflater.from(parent.context).inflate(R.layout.others_profile_item,parent,false)
+        val view=LayoutInflater.from(parent.context).inflate(R.layout.search_view_item,parent,false)
         return ViewHolder(view)
     }
 
     override fun getItemCount(): Int=journals.size
 
+    fun updateList(newList: List<SearchJournal>) {
+        journals.clear()
+        journals.addAll(newList)
+        notifyDataSetChanged()
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val journal=journals[position]
-        holder.tvtitle.text=journal.name
-        loadimage(journal.image,holder.ivimage)
+        holder.tvlocation.text=journal.location
+        getUser(journal.user_id,holder.ivprofileimage,holder.tvname)
         holder.itemView.setOnClickListener {
-            getUser(journal.user_id,journal,holder.itemView.context)
+            val intent = Intent(holder.itemView.context, CompleteJournalView::class.java)
+            intent.putExtra("title",journal.name)
+            intent.putExtra("name",journal.username)
+            intent.putExtra("location",journal.location)
+            intent.putExtra("journalimage",journal.image)
+            intent.putExtra("desc",journal.description)
+            intent.putExtra("user_id",journal.user_id)
+            holder.itemView.context.startActivity(intent)
         }
     }
 
-    private fun getUser(userid: String?,journal:TravelJournalsItem,context:Context) {
+    private fun getUser(userid: String?,imageview:ImageView,tvusername:TextView) {
         if(userid==null) return
         val apiService = Retrofit_Client.instance
         val call = apiService.getUser(userid)
@@ -47,14 +61,8 @@ class OthersPjAdapter(private val journals:MutableList<TravelJournalsItem>):Recy
         call.enqueue(object : Callback<User?> {
             override fun onResponse(call: Call<User?>, response: Response<User?>) {
                 if (response.isSuccessful) {
-                    val intent = Intent(context, CompleteJournalView::class.java)
-                    intent.putExtra("title",journal.name)
-                    intent.putExtra("name",response.body()?.name)
-                    intent.putExtra("location",journal.location)
-                    intent.putExtra("journalimage",journal.image)
-                    intent.putExtra("desc",journal.description)
-                    intent.putExtra("user_id",journal.user_id)
-                    context.startActivity(intent)
+                    loadimage(response.body()?.profile_image,imageview)
+                    tvusername.text=response.body()?.name
                 }
             }
             override fun onFailure(call: Call<User?>, t: Throwable) {

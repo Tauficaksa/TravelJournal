@@ -63,6 +63,7 @@ class FavouritesJournalAdapter(private val favouritejournals:List<TravelJournals
                     intent.putExtra("location",journal.location)
                     intent.putExtra("journalimage",journal.image)
                     intent.putExtra("desc",journal.description)
+                    intent.putExtra("user_id",journal.user_id)
                     context.startActivity(intent)
                 } else {
                     Toast.makeText(context,"Could not fetch journal",Toast.LENGTH_SHORT).show()

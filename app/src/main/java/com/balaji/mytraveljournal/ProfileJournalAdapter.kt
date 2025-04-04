@@ -55,6 +55,7 @@ class ProfileJournalAdapter(private val profilejournals:MutableList<ProfileJourn
             intent.putExtra("location",profilejournal.location)
             intent.putExtra("journalimage",profilejournal.journal_image)
             intent.putExtra("desc",profilejournal.description)
+            intent.putExtra("user_id",getUserId(holder.itemView.context))
             holder.itemView.context.startActivity(intent)
         }
     }
@@ -62,6 +63,10 @@ class ProfileJournalAdapter(private val profilejournals:MutableList<ProfileJourn
     private fun getUserName(context: Context): String? {
         val sharedPreferences = context.getSharedPreferences("UserPrefs", AppCompatActivity.MODE_PRIVATE)
         return sharedPreferences.getString("user_name", null)
+    }
+    private fun getUserId(context: Context): String? {
+        val sharedPreferences = context.getSharedPreferences("UserPrefs", AppCompatActivity.MODE_PRIVATE)
+        return sharedPreferences.getString("user_id", null)
     }
 
     private fun editalertdialog(journalid:String,context: Context,profilejournal: ProfileJournal){
